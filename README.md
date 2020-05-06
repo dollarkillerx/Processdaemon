@@ -12,7 +12,7 @@ SIGTERM      15         /* Termination (ANSI).  */                      终止�
 ### use
 ``` 
 [dependencies]
-processdaemon = { git= "https://github.com/dollarkillerx/Processdaemon/processdaemon" }
+processdaemon = { git= "https://github.com/dollarkillerx/Processdaemon" }
 ```
 
 ### examples
