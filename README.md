@@ -16,7 +16,7 @@ processdaemon = { git= "https://github.com/dollarkillerx/Processdaemon" }
 ```
 
 ### examples
-``` 
+```rust
 //! process daemon
 //! Stable operation on systems without nohup
 
@@ -27,4 +27,35 @@ processdaemon = { git= "https://github.com/dollarkillerx/Processdaemon" }
 /// use processdaemon::process_daemon;
 /// thread::spawn(process_daemon);
 /// ```
+```
+
+### 在后台运行
+思路: 主进程创建一个子程序   然后主进程退出
+```rust
+use std::process::Command;
+use std::thread;
+use std::env;
+use std::time::Duration;
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+    if args.len() == 2 {
+        if &args[1] == "start" {
+            // 主进程启动 子进程
+            let child = Command::new(&args[0])
+                .spawn().expect("Child process failed to start.");
+            println!("child pid: {}", child.id());
+            // 主进程退出
+            // child.forget() No Child Left Behind
+        }
+    } else {
+        // 这里为业务逻辑....
+        let mut i = 1;
+        loop {
+            i += 1;
+            println!("i: {}",i);
+            thread::sleep(Duration::from_millis(500));
+        }
+    }
+}
 ```
